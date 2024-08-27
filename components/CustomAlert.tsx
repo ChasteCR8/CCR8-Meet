@@ -23,30 +23,6 @@ const CustomAlert: React.FC<CustomAlertProps> = ({ message, onClose }) => {
     }, 300); // Delay to match the animation duration
   };
 
-  const [showAlert, setShowAlert] = useState<string | null>(null);
-
-	useEffect(() => {
-	  const handleContextMenu = (e: MouseEvent) => {
-		e.preventDefault();
-		setShowAlert("Right-click is disabled on this site. Please use the site's navigation to explore.");
-	  };
-  
-	  const handleKeyDown = (e: KeyboardEvent) => {
-		if (e.key === "F12" || (e.ctrlKey && (e.key === "I" || e.key === "U"))) {
-		  e.preventDefault();
-		  setShowAlert("Keyboard shortcuts for developer tools are disabled on this site.");
-		}
-	  };
-  
-	  document.addEventListener('contextmenu', handleContextMenu);
-	  document.addEventListener('keydown', handleKeyDown);
-  
-	  return () => {
-		document.removeEventListener('contextmenu', handleContextMenu);
-		document.removeEventListener('keydown', handleKeyDown);
-	  };
-	}, []);
-
   return (
     <div
       className={`fixed inset-0 flex items-center justify-center z-50 transition-opacity duration-300 ${
@@ -66,13 +42,6 @@ const CustomAlert: React.FC<CustomAlertProps> = ({ message, onClose }) => {
           Close
         </button>
       </div>
-      {/* Render the custom alert modal if needed */}
-      {showAlert && (
-        <CustomAlert
-          message={showAlert}
-          onClose={() => setShowAlert(null)}
-        />
-      )}
     </div>
   );
 };
